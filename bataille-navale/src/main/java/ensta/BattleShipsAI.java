@@ -1,4 +1,5 @@
 package ensta;
+import ensta.Ships.*;
 import java.io.Serializable;
 import java.util.*;
 
