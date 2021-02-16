@@ -11,18 +11,28 @@ public class TestBoard {
         AircraftCarrier aircraft = new AircraftCarrier(Orientation.SOUTH);
         BattleShip battleship = new BattleShip(Orientation.NORTH);
         //placed
-        myBoard.putShip(destroyer, 2, 1);
-        myBoard.putShip(submarine, 3, 3);
-        myBoard.putShip(aircraft, 5, 5);
-        myBoard.putShip(battleship, 9, 9);
+        try {
+            myBoard.putShip(destroyer, 2, 1);
+            myBoard.putShip(submarine, 3, 3);
+            myBoard.putShip(aircraft, 5, 5);
+            myBoard.putShip(battleship, 9, 9);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
         //can't be placed
-        myBoard.putShip(aircraft, 5, 6);
-        myBoard.putShip(destroyer, 3, 1);
+        try {
+            myBoard.putShip(aircraft, 5, 6);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
 
-        //FRAPPES
+        //FRAPPES 
+        /*
         myBoard.setHit(true, 3, 3);
         boolean hit = myBoard.getHit(3, 3);
-        System.out.println(hit);
+        System.out.println(hit);*/
 
 
         myBoard.print();

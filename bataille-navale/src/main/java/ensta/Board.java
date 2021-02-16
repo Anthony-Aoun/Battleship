@@ -48,10 +48,10 @@ public class Board implements IBoard {
     }
 
     // la position (x, y) = (1, 1) correspond à : en haut, à gauche
-    public void putShip(AbstractShip ship, int x, int y) {
+    // throws "Couldn't place ship" if there already is a ship here or index out of bound
+    public void putShip(AbstractShip ship, int x, int y) throws Exception {
         Orientation orient = ship.getOrientation();
         int size_ship = ship.getTaille();
-        int size_grid = getSize();
         int i, j; // indices matriciels that go from 0 to size_grid-1
         boolean possible = true;
 
@@ -60,12 +60,22 @@ public class Board implements IBoard {
             j = x - 1;
             // check if possible
             for (i = y - 1; i >= y - size_ship; --i) {
-                if (j < 0 || j >= size_grid || i < 0 || i >= size_grid || hasShip(j + 1, i + 1)) {
+                try {
+                    // trows exception if index out of bound
+                    if (hasShip(j + 1, i + 1)) {
+                        possible = false;
+                    }
+                } catch (Exception e) {
                     possible = false;
+                    // Index out of bound
+                    System.out.println(e);
                 }
             }
+            // if not possible throw exception
+            if (!possible)
+                throw new Exception("Couldn't place ship");
             // if possible, place ship
-            if (possible) {
+            else {
                 for (i = y - 1; i >= y - size_ship; --i) {
                     this.navires[i][j] = '#';
                 }
@@ -73,11 +83,18 @@ public class Board implements IBoard {
         } else if (orient == Orientation.SOUTH) {
             j = x - 1;
             for (i = y - 1; i <= y + size_ship - 2; ++i) {
-                if (j < 0 || j >= size_grid || i < 0 || i >= size_grid || hasShip(j + 1, i + 1)) {
+                try {
+                    if (hasShip(j + 1, i + 1)) {
+                        possible = false;
+                    }
+                } catch (Exception e) {
                     possible = false;
+                    System.out.println(e);
                 }
             }
-            if (possible) {
+            if (!possible)
+                throw new Exception("Couldn't place ship");
+            else {
                 for (i = y - 1; i <= y + size_ship - 2; ++i) {
                     this.navires[i][j] = '#';
                 }
@@ -85,11 +102,18 @@ public class Board implements IBoard {
         } else if (orient == Orientation.EAST) {
             i = y - 1;
             for (j = x - 1; j <= x + size_ship - 2; ++j) {
-                if (j < 0 || j >= size_grid || i < 0 || i >= size_grid || hasShip(j + 1, i + 1)) {
+                try {
+                    if (hasShip(j + 1, i + 1)) {
+                        possible = false;
+                    }
+                } catch (Exception e) {
                     possible = false;
+                    System.out.println(e);
                 }
             }
-            if (possible) {
+            if (!possible)
+                throw new Exception("Couldn't place ship");
+            else {
                 for (j = x - 1; j <= x + size_ship - 2; ++j) {
                     this.navires[i][j] = '#';
                 }
@@ -97,41 +121,43 @@ public class Board implements IBoard {
         } else if (orient == Orientation.WEST) {
             i = y - 1;
             for (j = x - 1; j >= x - size_ship; --j) {
-                if (j < 0 || j >= size_grid || i < 0 || i >= size_grid || hasShip(j + 1, i + 1)) {
+                try {
+                    if (hasShip(j + 1, i + 1)) {
+                        possible = false;
+                    }
+                } catch (Exception e) {
                     possible = false;
+                    System.out.println(e);
                 }
             }
-            if (possible) {
+            if (!possible)
+                throw new Exception("Couldn't place ship");
+            else {
                 for (j = x - 1; j >= x - size_ship; --j) {
                     this.navires[i][j] = '#';
                 }
             }
         }
-        // if we couldn't place ship
-        if (!possible)
-            System.out.println("Couldn't place "+ship.getNom());
     }
 
-    // doesn't make sure if we are in the grid or not
-    public boolean hasShip(int x, int y) {
-        if (this.navires[y - 1][x - 1] != '.')
-            return true;
-        else
-            return false;
-    }
-
-    public void setHit(boolean hit, int x, int y) {
+    public boolean hasShip(int x, int y) throws Exception {
         int size_grid = this.frappes.length;
-        if (x >= 1 && x <= size_grid && y >= 1 && y <= size_grid) {
-            this.frappes[y-1][x-1] = hit;
-        }
-        else {
-            System.out.println("Error : Index out of bound !");
-        }
+        if (x < 1 || x > size_grid || y < 1 || y > size_grid)
+            throw new Exception("Index out of bound");
+        return (this.navires[y - 1][x - 1] != '.');
     }
 
-    // doesn't make sure if we are in the grid or not
-    public Boolean getHit(int x, int y) {
+    public void setHit(boolean hit, int x, int y) throws Exception {
+        int size_grid = this.frappes.length;
+        if (x < 1 || x > size_grid || y < 1 || y > size_grid)
+            throw new Exception("Index out of bound");
+        this.frappes[y - 1][x - 1] = hit;
+    }
+
+    public Boolean getHit(int x, int y) throws Exception {
+        int size_grid = this.frappes.length;
+        if (x < 1 || x > size_grid || y < 1 || y > size_grid)
+            throw new Exception("Index out of bound");
         return this.frappes[y - 1][x - 1];
     }
 
