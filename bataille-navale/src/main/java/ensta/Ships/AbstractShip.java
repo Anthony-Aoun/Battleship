@@ -1,4 +1,5 @@
 package ensta.Ships;
+
 import ensta.*;
 
 public class AbstractShip {
@@ -6,6 +7,7 @@ public class AbstractShip {
     protected String nom;
     protected int taille;
     protected Orientation orientation;
+    protected int strikeCount;
 
     public char getLabel() {
         return this.label;
@@ -23,8 +25,19 @@ public class AbstractShip {
         return this.orientation;
     }
 
+    public int getStrikeCount() {
+        return this.strikeCount;
+    }
+
     public void setOrientation(Orientation o) {
         this.orientation = o;
+    }
+
+    public void addStrike() throws Exception {
+        if (this.strikeCount >= this.taille)
+            throw new Exception("Max number of possible strikes reached");
+        else
+            this.strikeCount++;
     }
 
     public AbstractShip(char l, String n, int t, Orientation o) {
@@ -32,7 +45,6 @@ public class AbstractShip {
         this.nom = n;
         this.taille = t;
         this.orientation = o;
+        this.strikeCount = 0;
     }
 }
-
-

@@ -7,6 +7,13 @@ public class TestBoard {
     public static void main(String[] args) {
         System.out.println();
         Board myBoard = new Board("test", 9);
+        try {
+            myBoard.setHit(false, 1, 1);
+        } catch(Exception e) {
+
+        }
+        
+        myBoard.print();
         // NAVIRES
         Destroyer destroyer = new Destroyer(Orientation.WEST);
         /*
