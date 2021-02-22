@@ -48,7 +48,8 @@ public class Board implements IBoard {
     }
 
     // la position (x, y) = (1, 1) correspond à : en haut, à gauche
-    // throws "Couldn't place ship" if there already is a ship here or index out of bound
+    // throws "Couldn't place ship" if there already is a ship here or index out of
+    // bound
     public void putShip(AbstractShip ship, int x, int y) throws Exception {
         Orientation orient = ship.getOrientation();
         int size_ship = ship.getTaille();
@@ -68,7 +69,7 @@ public class Board implements IBoard {
                 } catch (Exception e) {
                     possible = false;
                     // Index out of bound
-                    System.out.println(e);
+                    // System.out.println(e);
                 }
             }
             // if not possible throw exception

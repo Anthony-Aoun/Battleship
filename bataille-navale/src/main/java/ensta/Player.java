@@ -1,11 +1,12 @@
 package ensta;
+
 import ensta.Ships.*;
 import java.io.Serializable;
 import java.util.List;
 
 public class Player {
-    /* **
-     * Attributs
+    /*
+     * ** Attributs
      */
     protected Board board;
     protected Board opponentBoard;
@@ -13,8 +14,8 @@ public class Player {
     protected AbstractShip[] ships;
     protected boolean lose;
 
-    /* **
-     * Constructeur
+    /*
+     * ** Constructeur
      */
     public Player(Board board, Board opponentBoard, List<AbstractShip> ships) {
         this.board = board;
@@ -22,12 +23,13 @@ public class Player {
         this.opponentBoard = opponentBoard;
     }
 
-    /* **
-     * Méthodes
+    /*
+     * ** Méthodes
      */
 
     /**
-     * Read keyboard input to get ships coordinates. Place ships on given coodrinates.
+     * Read keyboard input to get ships coordinates. Place ships on given
+     * coodrinates.
      */
     public void putShips() {
         boolean done = false;
@@ -39,12 +41,9 @@ public class Player {
             System.out.println(msg);
             InputHelper.ShipInput res = InputHelper.readShipInput();
 
-            if (res.orientation == "n") s.setOrientation(Orientation.NORTH);
-            else if (res.orientation == "s") s.setOrientation(Orientation.SOUTH);
-            else if (res.orientation == "e") s.setOrientation(Orientation.EAST);
-            else if (res.orientation == "s") s.setOrientation(Orientation.SOUTH);
+            s.setOrientation(res.orientation);
             try {
-                board.putShip(s, res.x, res.y);
+                board.putShip(s, res.x + 1, res.y + 1);
                 // When ship placement successful
                 ++i;
                 done = i == 5;
