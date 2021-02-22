@@ -35,15 +35,23 @@ public class Player {
 
         do {
             AbstractShip s = ships[i];
-            String msg = String.format("placer %d : %s(%d)", i + 1, s.getName(), s.getLength());
+            String msg = String.format("placer %d : %s(%d)", i + 1, s.getNom(), s.getTaille());
             System.out.println(msg);
             InputHelper.ShipInput res = InputHelper.readShipInput();
-            // TODO set ship orientation
-            // TODO put ship at given position
 
-            // TODO when ship placement successful
-            ++i;
-            done = i == 5;
+            if (res.orientation == "n") s.setOrientation(Orientation.NORTH);
+            else if (res.orientation == "s") s.setOrientation(Orientation.SOUTH);
+            else if (res.orientation == "e") s.setOrientation(Orientation.EAST);
+            else if (res.orientation == "s") s.setOrientation(Orientation.SOUTH);
+            try {
+                board.putShip(s, res.x, res.y);
+                // When ship placement successful
+                ++i;
+                done = i == 5;
+            } catch (Exception e) {
+                // Couldn't place ship
+                System.out.println(e);
+            }
 
             board.print();
         } while (!done);
