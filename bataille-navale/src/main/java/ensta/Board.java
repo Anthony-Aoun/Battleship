@@ -80,8 +80,6 @@ public class Board implements IBoard {
                     }
                 } catch (Exception e) {
                     possible = false;
-                    // Index out of bound
-                    // System.out.println(e);
                 }
             }
             // if not possible throw exception
@@ -102,7 +100,6 @@ public class Board implements IBoard {
                     }
                 } catch (Exception e) {
                     possible = false;
-                    System.out.println(e);
                 }
             }
             if (!possible)
@@ -121,7 +118,6 @@ public class Board implements IBoard {
                     }
                 } catch (Exception e) {
                     possible = false;
-                    System.out.println(e);
                 }
             }
             if (!possible)
@@ -140,7 +136,6 @@ public class Board implements IBoard {
                     }
                 } catch (Exception e) {
                     possible = false;
-                    System.out.println(e);
                 }
             }
             if (!possible)
@@ -174,7 +169,45 @@ public class Board implements IBoard {
         return this.frappes[y - 1][x - 1];
     }
 
+    // throw exception??
+    public Hit sendHit(int x, int y) throws Exception {
+        // on try si x et y sont dans le board
+        try {
+            if (hasShip(x, y)) {
+                // si on a déjà frappé là ou le bateau est coulé c'est un miss
+                if (this.navires[y - 1][x - 1].isStruck() || this.navires[y - 1][x - 1].isSunck()) {
+                    return Hit.MISS;
+                }
+                // s'il y a un navire non frappé dans cette position
+                else {
+                    // on le frappe
+                    this.navires[y - 1][x - 1].getShip().addStrike();
+                    this.navires[y - 1][x - 1].setStruck(true);
+                    // on vérifie s'il coule
+                    if (this.navires[y - 1][x - 1].isSunck()) {
+                        System.out.println("Le navire " + this.navires[y - 1][x - 1].getShip().getNom() + " "
+                                + this.navires[y - 1][x - 1].toString() + " a coulé");
+                        return Hit.fromInt(this.navires[y - 1][x - 1].getShip().getTaille());
+                    } else {
+                        return Hit.STIKE;
+                    }
+                }
+            } else {
+                return Hit.MISS;
+            }
+        // si index out of bound
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+
+    }
+
     public void print() {
+        System.out.println();
+        // **************************
+        for (int i = 0; i < 2 * this.frappes.length + 1; ++i) {
+            System.out.print("*");
+        }
         System.out.println();
         System.out.println("Navires : ");
         System.out.print("  ");
@@ -189,8 +222,12 @@ public class Board implements IBoard {
             for (int j = 0; j < this.navires.length; ++j) {
                 if (this.navires[i][j].getShip() == null)
                     System.out.print(". ");
-                else 
-                    System.out.print("# ");
+                else if (this.navires[i][j].isStruck() && !this.navires[i][j].isSunck())
+                    System.out.print(ColorUtil.colorize("# ", ColorUtil.Color.YELLOW));
+                else if (this.navires[i][j].isSunck())
+                    System.out.print(ColorUtil.colorize("# ", ColorUtil.Color.RED));
+                else
+                    System.out.print(ColorUtil.colorize("# ", ColorUtil.Color.WHITE));
             }
             System.out.println();
         }
@@ -217,5 +254,10 @@ public class Board implements IBoard {
             }
             System.out.println();
         }
+        // **************************
+        for (int i = 0; i < 2 * this.frappes.length + 1; ++i) {
+            System.out.print("*");
+        }
+        System.out.println();
     }
 }

@@ -46,10 +46,10 @@ public class Player {
                 board.putShip(s, res.x + 1, res.y + 1);
                 // When ship placement successful
                 ++i;
-                done = i == 5;
+                done = i == 2;
             } catch (Exception e) {
                 // Couldn't place ship
-                System.out.println(e);
+                System.out.println("Couldn't place ship. Please try again");
             }
 
             board.print();
@@ -57,16 +57,22 @@ public class Player {
     }
 
     public Hit sendHit(int[] coords) {
-        boolean done;
+        boolean done = false;
         Hit hit = null;
 
         do {
             System.out.println("où frapper?");
             InputHelper.CoordInput hitInput = InputHelper.readCoordInput();
-            // TODO call sendHit on this.opponentBoard
-
-            // TODO : Game expects sendHit to return BOTH hit result & hit coords.
-            // return hit is obvious. But how to return coords at the same time ?
+            try {
+                hit = this.opponentBoard.sendHit(hitInput.x, hitInput.y);
+                // en java les arguments sont passés en référence
+                coords[0] = hitInput.x;
+                coords[1] = hitInput.y;
+                done = true;
+            } catch (Exception e) {
+                System.out.println("Couldn't send hit. Please try again")
+                done = false;
+            }
         } while (!done);
 
         return hit;

@@ -1,7 +1,7 @@
 package ensta.Ships;
 import ensta.*;
 
-public class ShipState {
+public class ShipState { 
     protected AbstractShip ship;
     protected boolean struck;
 
