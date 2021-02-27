@@ -169,7 +169,6 @@ public class Board implements IBoard {
         return this.frappes[y - 1][x - 1];
     }
 
-    // throw exception??
     public Hit sendHit(int x, int y) throws Exception {
         // on try si x et y sont dans le board
         try {
@@ -204,10 +203,7 @@ public class Board implements IBoard {
 
     public void print() {
         System.out.println();
-        // **************************
-        for (int i = 0; i < 2 * this.frappes.length + 1; ++i) {
-            System.out.print("*");
-        }
+    
         System.out.println();
         System.out.println("Navires : ");
         System.out.print("  ");
@@ -223,11 +219,11 @@ public class Board implements IBoard {
                 if (this.navires[i][j].getShip() == null)
                     System.out.print(". ");
                 else if (this.navires[i][j].isStruck() && !this.navires[i][j].isSunck())
-                    System.out.print(ColorUtil.colorize("# ", ColorUtil.Color.YELLOW));
+                    System.out.print(ColorUtil.colorize(this.navires[i][j].getShip().getLabel()+" ", ColorUtil.Color.YELLOW));
                 else if (this.navires[i][j].isSunck())
-                    System.out.print(ColorUtil.colorize("# ", ColorUtil.Color.RED));
+                    System.out.print(ColorUtil.colorize(this.navires[i][j].getShip().getLabel()+" ", ColorUtil.Color.RED));
                 else
-                    System.out.print(ColorUtil.colorize("# ", ColorUtil.Color.WHITE));
+                    System.out.print(ColorUtil.colorize(this.navires[i][j].getShip().getLabel()+" ", ColorUtil.Color.WHITE));
             }
             System.out.println();
         }
@@ -248,16 +244,18 @@ public class Board implements IBoard {
                 if (this.frappes[i][j] == null)
                     System.out.print(". ");
                 else if (this.frappes[i][j] == true)
-                    System.out.print(ColorUtil.colorize("X ", ColorUtil.Color.RED));
+                    if (this.navires[i][j].isSunck()) {
+                        System.out.print(ColorUtil.colorize("X ", ColorUtil.Color.RED));
+                    }
+                    else {
+                        System.out.print(ColorUtil.colorize("X ", ColorUtil.Color.YELLOW));
+                    }   
                 else
                     System.out.print(ColorUtil.colorize("X ", ColorUtil.Color.WHITE));
             }
             System.out.println();
         }
-        // **************************
-        for (int i = 0; i < 2 * this.frappes.length + 1; ++i) {
-            System.out.print("*");
-        }
+
         System.out.println();
     }
 }

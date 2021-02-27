@@ -40,6 +40,13 @@ public class AbstractShip {
             this.strikeCount++;
     }
 
+    public boolean isSunck() {
+        if(this.strikeCount == this.taille)
+            return true;
+        else
+            return false;
+    }
+
     public AbstractShip(char l, String n, int t, Orientation o) {
         this.label = l;
         this.nom = n;

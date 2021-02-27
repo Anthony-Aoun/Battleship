@@ -65,12 +65,19 @@ public class Player {
             InputHelper.CoordInput hitInput = InputHelper.readCoordInput();
             try {
                 hit = this.opponentBoard.sendHit(hitInput.x, hitInput.y);
+                //on modifie frappes
+                if (hit == Hit.MISS) {
+                    this.board.setHit(false, hitInput.x, hitInput.y);
+                }
+                else {
+                    this.board.setHit(true, hitInput.x, hitInput.y);
+                }
                 // en java les arguments sont passés en référence
                 coords[0] = hitInput.x;
                 coords[1] = hitInput.y;
                 done = true;
             } catch (Exception e) {
-                System.out.println("Couldn't send hit. Please try again")
+                System.out.println("Couldn't send hit. Please try again");
                 done = false;
             }
         } while (!done);
