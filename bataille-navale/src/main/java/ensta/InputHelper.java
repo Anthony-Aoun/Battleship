@@ -92,6 +92,8 @@ public final class InputHelper {
             }
         } while (!done && sin.hasNextLine());
 
+        res.x++;
+        res.y++;
         return res;
     }
 }

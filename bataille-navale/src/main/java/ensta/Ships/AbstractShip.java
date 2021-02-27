@@ -41,10 +41,15 @@ public class AbstractShip {
     }
 
     public boolean isSunck() {
-        if(this.strikeCount == this.taille)
-            return true;
-        else
+        try {
+            if(this.strikeCount == this.taille)
+                return true;
+            else
+                return false;
+        } catch(Exception e) {
             return false;
+        }
+        
     }
 
     public AbstractShip(char l, String n, int t, Orientation o) {

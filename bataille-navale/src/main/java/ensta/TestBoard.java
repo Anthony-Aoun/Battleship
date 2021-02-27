@@ -15,8 +15,8 @@ public class TestBoard {
         
         myBoard.print();
         // NAVIRES
-        Destroyer destroyer = new Destroyer(Orientation.WEST);
-        Submarine submarine = new Submarine(Orientation.WEST);
+        //Destroyer destroyer = new Destroyer(Orientation.WEST);
+        //Submarine submarine = new Submarine(Orientation.WEST);
         /*ShipState state1 = new ShipState();
         ShipState state2 = new ShipState();
         state1.setShip(destroyer);
@@ -45,8 +45,11 @@ public class TestBoard {
          * System.out.println(hit);
          */
         ArrayList<AbstractShip> ships = new ArrayList<>();
-        ships.add(destroyer);
-        ships.add(submarine);
+        ships.add(new Destroyer(Orientation.WEST));
+        ships.add(new Destroyer(Orientation.WEST));
+        ships.add(new Destroyer(Orientation.WEST));
+        ships.add(new Destroyer(Orientation.WEST));
+        ships.add(new Destroyer(Orientation.WEST));
         Player player = new Player(myBoard, myBoard, ships);
         player.putShips();
         

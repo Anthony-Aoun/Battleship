@@ -202,8 +202,9 @@ public class Board implements IBoard {
     }
 
     public void print() {
-        System.out.println();
-    
+        for (int i=0; i< 2*this.navires.length + 1; ++i) {
+            System.out.print("*");
+        }
         System.out.println();
         System.out.println("Navires : ");
         System.out.print("  ");

@@ -23,10 +23,11 @@ public class ShipState {
         this.struck = s;
     }
     public boolean isSunck() {
-        if(this.ship.getStrikeCount() == this.ship.getTaille())
-            return true;
-        else
+        try {
+            return this.ship.isSunck();
+        } catch(Exception e) {
             return false;
+        }
     }
     public String toString() {
         if (struck)

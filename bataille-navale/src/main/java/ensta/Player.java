@@ -1,7 +1,7 @@
 package ensta;
 
 import ensta.Ships.*;
-import java.io.Serializable;
+//import java.io.Serializable;
 import java.util.List;
 
 public class Player {
@@ -46,7 +46,7 @@ public class Player {
                 board.putShip(s, res.x + 1, res.y + 1);
                 // When ship placement successful
                 ++i;
-                done = i == 2;
+                done = i == 5;
             } catch (Exception e) {
                 // Couldn't place ship
                 System.out.println("Couldn't place ship. Please try again");
