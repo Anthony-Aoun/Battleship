@@ -40,6 +40,10 @@ public class Game {
             Board b1 = new Board(name, 9);
             Board b2 = new Board("AI", 9);
 
+            // tell each board who is his opponent
+            b1.setOpponentBoard(b2);
+            b2.setOpponentBoard(b1);
+
             // ships
             List<AbstractShip> ships = createDefaultShips();
 

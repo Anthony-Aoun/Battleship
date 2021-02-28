@@ -6,6 +6,7 @@ public class Board implements IBoard {
     private String nom;
     private ShipState navires[][];
     private Boolean frappes[][];
+    private Board opponentBoard;
 
     public Board(String n, int taille) {
         this.nom = n;
@@ -201,6 +202,14 @@ public class Board implements IBoard {
 
     }
 
+    public void setOpponentBoard(Board B) {
+        this.opponentBoard = B;
+    }
+
+    public Board getOpponentBoard() {
+        return this.opponentBoard;
+    }
+
     public void print() {
         for (int i=0; i< 2*this.navires.length + 1; ++i) {
             System.out.print("*");
@@ -244,13 +253,14 @@ public class Board implements IBoard {
             for (int j = 0; j < this.frappes.length; ++j) {
                 if (this.frappes[i][j] == null)
                     System.out.print(". ");
-                else if (this.frappes[i][j] == true)
-                    if (this.navires[i][j].isSunck()) {
-                        System.out.print(ColorUtil.colorize("X ", ColorUtil.Color.RED));
+                else if (this.frappes[i][j] == true) {
+                    if (this.opponentBoard.navires[i][j].isStruck() && !this.opponentBoard.navires[i][j].isSunck()) { 
+                        System.out.print(ColorUtil.colorize("X ", ColorUtil.Color.YELLOW));
                     }
                     else {
-                        System.out.print(ColorUtil.colorize("X ", ColorUtil.Color.YELLOW));
+                        System.out.print(ColorUtil.colorize("X ", ColorUtil.Color.RED));
                     }   
+                }
                 else
                     System.out.print(ColorUtil.colorize("X ", ColorUtil.Color.WHITE));
             }

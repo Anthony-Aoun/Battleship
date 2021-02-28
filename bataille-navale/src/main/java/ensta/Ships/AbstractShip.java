@@ -42,7 +42,7 @@ public class AbstractShip {
 
     public boolean isSunck() {
         try {
-            if(this.strikeCount == this.taille)
+            if(this.strikeCount >= this.taille)
                 return true;
             else
                 return false;
